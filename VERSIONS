@@ -1,0 +1,13 @@
+0.1 -	Inter-process flow monitoring
+
+0.2 -	Formatting added to output
+
+0.3 -	Inter-container flow monitoring
+
+0.4 -	Structure added to logging
+
+0.5 -	Refactored output processing
+
+0.6 -	Inter-pod flow monitoring
+
+0.7 -	Support multiple granularities

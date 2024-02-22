@@ -67,7 +67,7 @@ def run_sysdig_process():
 	else:
 		sysdig_invocation = ['sudo', 'sysdig', '-p', sysdig_output_format, sysdig_filter]
 	global sysdig_process
-	sysdig_process = subprocess.Popen(sysdig_invocation, stdout=subprocess.PIPE, text=True, bufsize=1)
+	sysdig_process = subprocess.Popen(sysdig_invocation, stdout=subprocess.PIPE, universal_newlines=True, bufsize=1)
 
 # Define the set of output fields needed, including Kubernetes-specific ones
 def get_sysdig_output_format():
@@ -101,11 +101,13 @@ def analyze_sysdig_output():
 # Bifurcate the event processing for read and write events
 def process_io_event(io_event):
 	io_dir = io_event['evt_io_dir']
-	match io_dir:
-		case 'write':
-			process_write(io_event)
-		case 'read':
+	if io_dir == 'write':
+		process_write(io_event)
+	else:
+		if io_dir == 'read':
 			process_read(io_event)
+		else:
+			logging.debug(f'Unsupported IO event {io_event}')
 
 # When a write occurs, the path that was written is tracked
 # The path is used as a key to index into a set of writers

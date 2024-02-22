@@ -2,6 +2,10 @@
 Cross process / container / pod Isolation Monitor
 
 ---
+
+Note: Use the `python-3.6.9` branch, if needed.
+
+---
 ### Overview
 
 Code execution can be isolated at various granularities, including that of (Linux) processes, containers, or (Kubernetes) pods. Isolation is intended to prevent interaction, thereby limiting the scope of analysis when reliability or security concerns arise. Flows that cross isolation boundaries are of particular interest for detecting anomalous activity.

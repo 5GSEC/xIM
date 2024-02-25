@@ -3,7 +3,7 @@ Cross process / container / pod Isolation Monitor
 
 ---
 
-Note: Use the `python-3.6.9` branch, if needed.
+Note: Use the `python-3.6.9` branch for the NDSS '24 [5G-Spector Artifact](https://github.com/5GSEC/5G-Spector/wiki/5G%E2%80%90Spector-Artifact-in-a-Simulated-LTE-Network).
 
 ---
 ### Overview
@@ -53,6 +53,31 @@ chown -R xim.xim /home/xim/bin/xim.py
 ```
 
 (Above `xim.py` is assumed to be installed in `/home/xim/bin`.)
+
+---
+
+### Output
+
+Below is sample output from xIM, run at cross-process granularity. 
+
+(This was collected on the [5G-Spector Artifact](https://github.com/5GSEC/5G-Spector/wiki/5G%E2%80%90Spector-Artifact-in-a-Simulated-LTE-Network), after following the steps upto and including the creation of [Normal UE connections](https://github.com/5GSEC/5G-Spector/wiki/5G%E2%80%90Spector-Artifact-in-a-Simulated-LTE-Network#normal-ue-connections).)
+
+```
+> ./xim.py -g process
+...
+WARNING: 2024-01-30 14:48:10 - Cross-process flow: systemd -> /sys/fs/cgroup/memory/kubepods.slice/kubepods-besteffort.slice/memory.limit_in_bytes -> kubelet
+WARNING: 2024-01-30 14:48:10 - Cross-process flow: systemd -> /sys/fs/cgroup/pids/kubepods.slice/kubepods-besteffort.slice/pids.max -> kubelet
+WARNING: 2024-01-30 14:48:11 - Cross-process flow: containerd-shim -> /tmp/runc-process473358252 -> runc
+WARNING: 2024-01-30 14:48:11 - Cross-process flow: 5 -> /run/k3s/containerd/io.containerd.runtime.v2.task/k8s.io/b13cb2ca563b809bddb9729b23459b7ddfac84fe89d8426aacfd88040617b268/log.json -> runc:[1:CHILD]
+WARNING: 2024-01-30 14:48:11 - Cross-process flow: containerd-shim -> /tmp/runc-process2105527380 -> runc
+WARNING: 2024-01-30 14:48:12 - Cross-process flow: calico-node -> /etc/hosts -> java
+WARNING: 2024-01-30 14:48:12 - Cross-process flow: containerd-shim -> /tmp/runc-process239751121 -> runc
+WARNING: 2024-01-30 14:48:19 - Cross-process flow: containerd-shim -> /tmp/runc-process3591136423 -> runc
+WARNING: 2024-01-30 14:48:24 - Cross-process flow: runc -> /sys/fs/cgroup/cpu,cpuacct/kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod498f2655_4500_44d7_97db_47f37d5773a8.slice/cri-containerd-69ecec53e07f5c8b640f3ffab3a474c4833f3602bc1a72829e31ce0c6365ae18.scope/cgroup.procs -> kubelet
+WARNING: 2024-01-30 14:48:24 - Cross-process flow: <NA> -> /sys/fs/cgroup/cpu,cpuacct/kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod498f2655_4500_44d7_97db_47f37d5773a8.slice/cri-containerd-69ecec53e07f5c8b640f3ffab3a474c4833f3602bc1a72829e31ce0c6365ae18.scope/cgroup.procs -> kubelet
+WARNING: 2024-01-30 14:48:28 - Cross-process flow: runc:[1:CHILD] -> /proc/self/mountinfo -> containerd-shim
+...
+```
 
 ---
 
